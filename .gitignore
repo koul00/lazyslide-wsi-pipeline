@@ -1,0 +1,24 @@
+# === Large data — NEVER commit whole-slide images (they are huge & public) ===
+slides/
+*.tif
+*.tiff
+*.svs
+*.ndpi
+*.mrxs
+
+# === Derived feature / score stores (large, regenerable) ===
+*.zarr/
+outputs/**/*.zarr/
+
+# === Upstream tool source (cloned separately to ~/LazySlide) ===
+LazySlide/
+
+# === macOS / editor / Python cruft ===
+.DS_Store
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+.venv/
+env/
+.env
