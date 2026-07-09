@@ -1,6 +1,6 @@
 # Zero-shot tumor detection on whole-slide images with LazySlide
 
-A clean, reproducible [LazySlide](https://lazyslide.readthedocs.io) pipeline for
+A reproducible [LazySlide](https://lazyslide.readthedocs.io) pipeline for
 computational pathology on CAMELYON16 whole-slide images (WSIs). It takes a raw
 slide to tissue detection, tiling, foundation-model features, spatial-domain
 analysis, and a **training-free (zero-shot)** tumor score that is validated
