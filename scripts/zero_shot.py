@@ -1,5 +1,5 @@
 """
-03_zero_shot.py — score every tile against text prompts (no training).
+zero_shot.py — score every tile against text prompts (no training).
     plip and  CONCH
 """
 

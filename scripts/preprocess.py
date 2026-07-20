@@ -1,5 +1,5 @@
 """
-01_preprocess.py — open a slide, find tissue, cut into tiles, save.
+preprocess.py — open a slide, find tissue, cut into tiles, save.
 
 """
 

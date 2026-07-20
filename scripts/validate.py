@@ -1,5 +1,5 @@
 """
-04_validate.py — compare zero-shot tumor scores against CAMELYON16 ground truth.
+validate.py — compare zero-shot tumor scores against CAMELYON16 ground truth.
 
 Labels each tile inside/outside the annotated tumor (ASAP XML, level-0 pixels)
 and measures how well the zero-shot score separates them (ROC-AUC). Saves an

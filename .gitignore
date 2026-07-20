@@ -1,4 +1,4 @@
-# === Large data — NEVER commit whole-slide images (they are huge & public) ===
+# === Large data ===
 slides/
 *.tif
 *.tiff

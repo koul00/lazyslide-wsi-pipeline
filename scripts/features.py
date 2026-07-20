@@ -1,5 +1,5 @@
 """
-02_features.py — feature extraction + spatial-domain analysis.
+features.py — feature extraction + spatial-domain analysis.
 
 
 """
@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import lazyslide as zs
 
 # --- settings you can change -------------------------------------------------
-MODEL = "plip"       # vision(+language) model; also reused by 03_zero_shot.py
+MODEL = "plip"       # vision(+language) model; also reused by zero_shot.py
 RESOLUTION = 0.2     # spatial-domain clustering resolution (higher = more domains)
 # -----------------------------------------------------------------------------
 

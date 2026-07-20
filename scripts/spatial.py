@@ -1,5 +1,5 @@
 """
-05_spatial.py — visualize the tile spatial graph and spatial domains.
+spatial.py — visualize the tile spatial graph and spatial domains.
 
 Uses the outputs of step 02:
   - zs.pp.tile_graph      -> neighbour graph in tables["tiles_graph"].obsp
@@ -9,7 +9,7 @@ Draws every tile as a node at its centroid, connects neighbouring tiles with
 edges, and colours the nodes by spatial domain.
 
 Usage (from ~/thesis, with the `lazyslide` conda env active):
-    python scripts/05_spatial.py slides/tumor_084.tif
+    python scripts/spatial.py slides/tumor_084.tif
 """
 
 import sys
