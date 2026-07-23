@@ -10,10 +10,13 @@ against the official (CAMELYON16 here) ground-truth annotation.
 ## Repository layout
 
 ```
-notebooks/   pipeline.ipynb (primary entry point)
-scripts/     the same pipeline split into per-stage scripts + a setup check
+notebooks/   pipeline.ipynb        — imports the pipeline from scripts/ (primary entry point)
+             pipeline_colab.ipynb  — self-contained version for Google Colab
+scripts/     pipeline_lib.py       — the pipeline as importable functions (the notebook imports these)
+             download_data.sh      — fetch CAMELYON16 slides + annotations
 outputs/     result previews (.png) committed for reference on WSI -084
-slides/      WSIs (.tif/.svs) + annotations (.xml/.geojson)  
+slides/      WSIs (.tif/.svs) + annotations (.xml/.geojson)
+requirements.txt   pip dependencies
 ```
 ----
 
@@ -25,17 +28,22 @@ PyTorch with Apple-MPS acceleration):
 ```bash
 conda create -n lazyslide python=3.11
 conda activate lazyslide
-pip install "lazyslide[all,models]"   # core + foundation-model dependencies
-pip install leidenalg igraph          # spatial-domain clustering (step 2)
-python scripts/check_setup.py         # verifies LazySlide, PyTorch, OpenSlide, GPU
+pip install -r requirements.txt       # LazySlide + models + analysis deps
 ```
 
-**Data.** Download slides into `slides/` and (optionally) their annotations
-alongside, using the same basename as the slide. Two annotation formats are
-supported for validation — `.xml` (ASAP / CAMELYON16) and `.geojson` (QuPath) —
-so slides from other datasets can be validated too. 
+Reading `.tif`/`.svs` slides also needs the OpenSlide **system** library
+(`brew install openslide` on macOS, `apt-get install openslide-tools` on Ubuntu/Colab).
 
-CAMELYON16 ground-truth annotations are available at:
+**Data.** Fetch a CAMELYON16 slide + its annotation straight into `slides/`:
+
+```bash
+bash scripts/download_data.sh tumor_084      # -> slides/tumor_084.tif (+ tumor_084.xml)
+```
+
+Or add your own slides to `slides/` with an optional same-basename annotation.
+Two formats are supported for validation — `.xml` (ASAP / CAMELYON16) and
+`.geojson` (QuPath) — so slides from other datasets can be validated too.
+CAMELYON16 annotations are also available directly at:
 
 ```
 https://camelyon-dataset.s3.amazonaws.com/CAMELYON16/annotations/<name>.xml
@@ -43,6 +51,9 @@ https://camelyon-dataset.s3.amazonaws.com/CAMELYON16/annotations/<name>.xml
 
 ## Pipeline
 
+Run it from the notebook [`notebooks/pipeline.ipynb`](notebooks/pipeline.ipynb)
+(primary entry point), or [`pipeline_colab.ipynb`](notebooks/pipeline_colab.ipynb) on Google Colab. Both drive the same five stages, all defined once in
+[`scripts/pipeline_lib.py`](scripts/pipeline_lib.py):
 
  1. Preprocess  open slide → detect tissue → cut into tiles  `outputs/<name>.zarr` (+ tissue/tiles previews) 
  2. Features + spatial PLIP features → aggregation → tile graph → spatial features → spatial domains table `plip_tiles`, `domain` per tile 
@@ -50,16 +61,9 @@ https://camelyon-dataset.s3.amazonaws.com/CAMELYON16/annotations/<name>.xml
  4. Validate  compare zero-shot score vs annotation (`.xml`/`.geojson`) → ROC-AUC  validation overlay + AUC (skipped if no annotation) 
  5. Spatial (viz)  draw the tile neighbour graph + spatial domains  neighbour-graph plot 
 
-The same five stages also exist as standalone scripts in `scripts/` to
-run from the terminal:
-
-```bash
-python scripts/preprocess.py slides/tumor_084.tif
-python scripts/features.py   slides/tumor_084.tif
-python scripts/zero_shot.py  slides/tumor_084.tif
-python scripts/validate.py   slides/tumor_084.tif
-python scripts/spatial.py    slides/tumor_084.tif   # optional
-```
+To run a whole folder of slides at once (a cohort)
+calls `pipeline_lib.run_cohort("slides", cfg)`, which runs every slide in `slides/`
+and writes `outputs/cohort_summary.csv`.
 
 Reload a saved result:
 

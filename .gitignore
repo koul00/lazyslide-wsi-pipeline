@@ -10,6 +10,12 @@ slides/
 *.zarr/
 outputs/**/*.zarr/
 
+# === Generated per-slide previews / summaries (regenerable) ===
+# tumor_084 previews were committed earlier for reference and stay tracked;
+# these rules only stop NEW generated outputs from being committed.
+outputs/*.png
+outputs/*.csv
+
 # === Upstream tool source (cloned separately to ~/LazySlide) ===
 LazySlide/
 

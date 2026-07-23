@@ -1,0 +1,19 @@
+# Python 3.11.  Install with:  pip install -r requirements.txt
+#
+# NOTE: reading .tif/.svs slides also needs the OpenSlide *system* library,
+# which pip cannot install:
+#   macOS:  brew install openslide
+#   Ubuntu: sudo apt-get install -y openslide-tools
+#   Colab:  !apt-get -qq install -y openslide-tools
+
+# --- core pipeline ---
+lazyslide[all,models]>=0.12,<0.13   # core + foundation-model dependencies (pulls torch, numpy, ...)
+leidenalg                            # spatial-domain clustering
+igraph                               # graph backend for clustering
+
+# --- validation / analysis (used by pipeline_lib) ---
+geopandas
+shapely
+scikit-learn
+pandas
+matplotlib
